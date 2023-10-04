@@ -15,13 +15,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Install gcc-multilib
+      run: sudo apt-get update && sudo apt-get install -y gcc-multilib
     - name: Install libtorch
       run: |
         wget https://download.pytorch.org/libtorch/cpu/libtorch-shared-with-deps-2.0.1%2Bcpu.zip
         unzip libtorch-shared-with-deps-2.0.1+cpu.zip
         mv libtorch /opt/
-        ls
-        ls /opt
+        echo "libtorch dir"
+        ls -la /opt/libtorch
       shell: bash
     - name: Set LIBTORCH environment variable
       run: echo "LIBTORCH=/opt/libtorch" >> $GITHUB_ENV
