@@ -39,10 +39,11 @@ jobs:
         pip3 install -r ./utils/requirements.txt
         python3 ./utils/prepare_models.py
         ls -la
-        python3 ./utils/prepare_distilroberta.py './models'
-        python3 ./utils/prepare_distilbert.py './models'
+        ls -la models
+        ls -la tests
+        python3 ./utils/prepare_distilroberta.py './tests'
+        python3 ./utils/prepare_distilbert.py './tests'
         ls -la 
-        ls models
         echo "dirs"
         ls ./tests
     - name: Test
