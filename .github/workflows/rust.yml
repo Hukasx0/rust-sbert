@@ -31,3 +31,5 @@ jobs:
       run: echo "LD_LIBRARY_PATH=/opt/libtorch/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
     - name: Build
       run: cargo build --verbose
+    - name: Test
+      run: cargo test --verbose
