@@ -37,8 +37,9 @@ jobs:
     - name: Test preparation
       run: |
         pip3 install -r ./utils/requirements.txt
-        python3 ./utils/prepare_distilroberta.py
-        python3 ./utils/prepare_distilbert.py
+        python3 ./utils/prepare_models.py
+        python3 ./utils/prepare_distilroberta.py './tests'
+        python3 ./utils/prepare_distilbert.py './tests'
         ls -la 
         echo "dirs"
         ls ./tests
