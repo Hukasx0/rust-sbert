@@ -12,9 +12,18 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
     - uses: actions/checkout@v3
+    - name: Install libtorch
+      run: |
+        wget https://download.pytorch.org/libtorch/cpu/libtorch-shared-with-deps-2.0.1%2Bcpu.zip
+        unzip libtorch-shared-with-deps-2.0.1%2Bcpu.zip
+        mv libtorch /opt/
+      shell: bash
+    - name: Set LIBTORCH environment variable
+      run: echo "LIBTORCH=/opt/libtorch" >> $GITHUB_ENV
     - name: Build
-      run: cargo build --verbose --features download-libtorch
+      run: cargo build --verbose
     - name: Run tests
-      run: cargo test --verbose --features download-libtorch
+      run: cargo test --verbose
