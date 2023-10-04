@@ -40,5 +40,6 @@ jobs:
         python3 ./utils/prepare_models.py
         ls -la ./models/
         ls -la ./models/distiluse-base-multilingual-cased
+        python3 ./utils/prepare_distilbert.py models/distiluse-base-multilingual-cased
     - name: Tests
       run: cargo test --verbose
