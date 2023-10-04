@@ -38,15 +38,5 @@ jobs:
       run: |
         pip3 install -r ./utils/requirements.txt
         python3 ./utils/prepare_models.py
-        ls -la
-        ls -la models
-        ls -la tests
-        echo "a"
-        ls -la utils
-        python3 ./utils/prepare_distilroberta.py './utils'
-        python3 ./utils/prepare_distilbert.py './utils'
-        ls -la 
-        echo "dirs"
-        ls ./tests
-    - name: Test
+    - name: Tests
       run: cargo test --verbose
