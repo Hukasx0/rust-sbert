@@ -38,5 +38,7 @@ jobs:
       run: |
         pip3 install -r ./utils/requirements.txt
         python3 ./utils/prepare_models.py
+        ls -la ./models/
+        ls -la ./models/distiluse-base-multilingual-cased
     - name: Tests
       run: cargo test --verbose
