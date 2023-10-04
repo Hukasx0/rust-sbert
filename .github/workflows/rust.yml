@@ -24,6 +24,7 @@ jobs:
         mv libtorch /opt/
         echo "libtorch dir"
         ls -la /opt/libtorch
+        export LD_LIBRARY_PATH=/opt/libtorch/lib:$LD_LIBRARY_PATH
       shell: bash
     - name: Set LIBTORCH environment variable
       run: echo "LIBTORCH=/opt/libtorch" >> $GITHUB_ENV
