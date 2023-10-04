@@ -22,9 +22,6 @@ jobs:
         wget https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-2.0.1%2Bcpu.zip
         unzip libtorch-cxx11-abi-shared-with-deps-2.0.1+cpu.zip
         mv libtorch /opt/
-        echo "libtorch dir"
-        ls -la /opt/libtorch
-        export LD_LIBRARY_PATH=/opt/libtorch/lib:$LD_LIBRARY_PATH
       shell: bash
     - name: Set LIBTORCH environment variable
       run: echo "LIBTORCH=/opt/libtorch" >> $GITHUB_ENV
@@ -32,6 +29,8 @@ jobs:
       run: echo "LIBTORCH_INCLUDE=/opt/libtorch" >> $GITHUB_ENV
     - name: Set LIBTORCH_LIB environment variable
       run: echo "LIBTORCH_LIB=/opt/libtorch" >> $GITHUB_ENV
+    - name: Set LD_LIBRARY_PATH environment variable
+      run: echo "LD_LIBRARY_PATH=/opt/libtorch/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
     - name: Build
       run: cargo build --verbose
     - name: Run tests
