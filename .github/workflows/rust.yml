@@ -15,9 +15,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - uses: actions/setup-python@v4
-      with:
-        python-version: '3.8' 
     - name: Install libtorch
       run: |
         wget https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-2.0.1%2Bcpu.zip
@@ -34,5 +31,20 @@ jobs:
       run: echo "LD_LIBRARY_PATH=/opt/libtorch/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
     - name: Build
       run: cargo build --verbose
-    - name: Tests
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.8' 
+    - name: preparation
+      run: |
+        pip3 install -r ./utils/requirements.txt
+        python3 ./utils/prepare_models.py
+        ls -la ./models/
+        ls -la ./models/distiluse-base-multilingual-cased
+        python3 ./utils/prepare_distilbert.py models/distiluse-base-multilingual-cased
+    - name: Run Tests
       run: cargo test --verbose -- --skip test_sbert_encode_attention --skip test_distilroberta_for_classification_rust_tokenizers_sentencepiece --skip test_rust_tokenizers_sentencepiece
