@@ -42,4 +42,4 @@ jobs:
         ls -la ./models/distiluse-base-multilingual-cased
         python3 ./utils/prepare_distilbert.py models/distiluse-base-multilingual-cased
     - name: Tests
-      run: cargo test -- --skip test_sbert_encode_attention --skip test_distilroberta_for_classification_rust_tokenizers_sentencepiece --skip test_rust_tokenizers_sentencepiece --verboose
+      run: cargo test -- --skip distilroberta_test --skip sbert_bench --verboose
