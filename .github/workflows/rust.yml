@@ -76,6 +76,9 @@ jobs:
       run: |
         pip install -r ./utils/requirements.txt
         python ./utils/prepare_models.py
+        # Copy the converted model files to a directory accessible to Rust tests
+        cp -r models/distiluse-base-multilingual-cased/ .
 
     - name: Run Tests
-      run: cargo test --verbose
+      run: |
+        cargo test --verbose
