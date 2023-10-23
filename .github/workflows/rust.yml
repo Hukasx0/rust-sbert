@@ -12,35 +12,6 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Install libtorch
-      run: |
-        wget https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-2.0.1%2Bcpu.zip
-        unzip libtorch-cxx11-abi-shared-with-deps-2.0.1+cpu.zip
-        mv libtorch /opt/
-      shell: bash
-
-    - name: Set LIBTORCH environment variable
-      run: echo "LIBTORCH=/opt/libtorch" >> $GITHUB_ENV
-
-    - name: Set LIBTORCH_INCLUDE environment variable
-      run: echo "LIBTORCH_INCLUDE=/opt/libtorch" >> $GITHUB_ENV
-
-    - name: Set LIBTORCH_LIB environment variable
-      run: echo "LIBTORCH_LIB=/opt/libtorch" >> $GITHUB_ENV
-
-    - name: Set LD_LIBRARY_PATH environment variable
-      run: echo "LD_LIBRARY_PATH=/opt/libtorch/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
-
-    - name: Build
-      run: cargo build --verbose
-
   test:
     runs-on: ubuntu-latest
 
@@ -76,16 +47,19 @@ jobs:
       run: |
         pip install -r ./utils/requirements.txt
         python ./utils/prepare_models.py
-        # Copy the converted model files to a directory accessible to Rust tests
-        cp -r models/distiluse-base-multilingual-cased/ .
-
-    - name: Download models and dependencies
-      run: |
-        mkdir -p models/distilroberta_toxicity
+        mkdir -p models/distilroberta_toxicity  # Tworzy folder, jeśli nie istnieje
+        # Pobiera modele i umieszcza je w odpowiednich folderach
         wget -P models/distilroberta_toxicity https://public.ukp.informatik.tu-darmstadt.de/reimers/sentence-transformers/v0.2/distiluse-base-multilingual-cased.zip
         unzip models/distilroberta_toxicity/distiluse-base-multilingual-cased.zip -d models/distilroberta_toxicity
-      continue-on-error: true
+
+    - name: Prepare for testing
+      run: |
+        mkdir -p models/distiluse-base-multilingual-cased  # Tworzy folder, jeśli nie istnieje
+        # Pobiera model i umieszcza go w odpowiednim folderze
+        wget -P models/distiluse-base-multilingual-cased https://public.ukp.informatik.tu-darmstadt.de/reimers/sentence-transformers/v0.2/distiluse-base-multilingual-cased.zip
+        unzip models/distiluse-base-multilingual-cased/distiluse-base-multilingual-cased.zip -d models/distiluse-base-multilingual-cased
 
     - name: Run Tests
       run: |
+        # Uruchamia testy dla obu modeli
         cargo test --verbose
