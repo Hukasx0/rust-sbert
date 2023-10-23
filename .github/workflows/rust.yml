@@ -48,18 +48,15 @@ jobs:
         pip install -r ./utils/requirements.txt
         python ./utils/prepare_models.py
         mkdir -p models/distilroberta_toxicity  # Tworzy folder, jeśli nie istnieje
-        # Pobiera modele i umieszcza je w odpowiednich folderach
         wget -P models/distilroberta_toxicity https://public.ukp.informatik.tu-darmstadt.de/reimers/sentence-transformers/v0.2/distiluse-base-multilingual-cased.zip
-        unzip models/distilroberta_toxicity/distiluse-base-multilingual-cased.zip -d models/distilroberta_toxicity
+        unzip -o models/distilroberta_toxicity/distiluse-base-multilingual-cased.zip -d models/distilroberta_toxicity
 
     - name: Prepare for testing
       run: |
         mkdir -p models/distiluse-base-multilingual-cased  # Tworzy folder, jeśli nie istnieje
-        # Pobiera model i umieszcza go w odpowiednim folderze
         wget -P models/distiluse-base-multilingual-cased https://public.ukp.informatik.tu-darmstadt.de/reimers/sentence-transformers/v0.2/distiluse-base-multilingual-cased.zip
-        unzip models/distiluse-base-multilingual-cased/distiluse-base-multilingual-cased.zip -d models/distiluse-base-multilingual-cased
+        unzip -o models/distiluse-base-multilingual-cased/distiluse-base-multilingual-cased.zip -d models/distiluse-base-multilingual-cased
 
     - name: Run Tests
       run: |
-        # Uruchamia testy dla obu modeli
         cargo test --verbose
