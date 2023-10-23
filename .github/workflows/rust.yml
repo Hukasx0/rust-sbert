@@ -79,6 +79,13 @@ jobs:
         # Copy the converted model files to a directory accessible to Rust tests
         cp -r models/distiluse-base-multilingual-cased/ .
 
+    - name: Download models and dependencies
+      run: |
+        mkdir -p models/distilroberta_toxicity
+        wget -P models/distilroberta_toxicity https://public.ukp.informatik.tu-darmstadt.de/reimers/sentence-transformers/v0.2/distiluse-base-multilingual-cased.zip
+        unzip models/distilroberta_toxicity/distiluse-base-multilingual-cased.zip -d models/distilroberta_toxicity
+      continue-on-error: true
+
     - name: Run Tests
       run: |
         cargo test --verbose
